@@ -1,29 +1,27 @@
-%global origname slim
-
-Name:           slim-dm
+Name:           slim
 Version:        1.3.2
-Release:        3%{?dist}
+Release:        2%{?dist}
 Summary:        Simple Login Manager
 Group:          User Interface/X
 License:        GPLv2+
 URL:            http://slim.berlios.de/
-Source0:        http://download.berlios.de/slim/%{origname}-%{version}.tar.gz
+Source0:        http://download.berlios.de/slim/%{name}-%{version}.tar.gz
 # stolen from xdm
-Source1:        %{origname}.pam
+Source1:        %{name}.pam
 # adapted from debian to use freedesktop
-Source2:        %{origname}-update_slim_wmlist
-Source3:        %{origname}-dynwm
-Source4:        %{origname}-reremix.txt
+Source2:        %{name}-update_slim_wmlist
+Source3:        %{name}-dynwm
+Source4:        %{name}-readme.txt
 # logrotate entry (see bz#573743)
-Source5:        %{origname}.logrotate.d
+Source5:        %{name}.logrotate.d
 
-Source6:        %{origname}.config
+Source6:        %{name}.config
 
 
 # Fedora-specific patches
-Patch0:         %{origname}-1.3.2-make.patch
-Patch1:         %{origname}-1.3.2-fedora.patch
-Patch2:         %{origname}-1.3.2-selinux.patch
+Patch0:         %{name}-1.3.2-make.patch
+Patch1:         %{name}-1.3.2-fedora.patch
+Patch2:         %{name}-1.3.2-selinux.patch
 
 BuildRequires:  libXmu-devel libXft-devel libXrender-devel
 BuildRequires:  libpng-devel libjpeg-devel freetype-devel fontconfig-devel
@@ -35,10 +33,7 @@ Requires:       %{_sysconfdir}/pam.d
 Requires:       pam >= 0.80
 # reuse the images
 Requires:       redhat-logos
-# for anaconda yum
-Provides:       service(graphical-login)
-Provides:       slim
-Provides:       slim-dm
+
 
 %description
 SLiM (Simple Login Manager) is a graphical login manager for X11.
@@ -52,7 +47,7 @@ information and modifies the slim configuration file accordingly,
 before launching slim.
 
 %prep
-%setup -q -n %{origname}-%{version}
+%setup -q -n %{name}-%{version}
 %patch0 -p1 -b .make
 %patch1 -p1 -b .fedora
 %patch2 -p1 -b .selinux
@@ -70,7 +65,7 @@ chmod 0644 %{buildroot}%{_sysconfdir}/slim.conf
 install -d -m755 %{buildroot}%{_sysconfdir}/pam.d
 install -p -m644 %{SOURCE1} %{buildroot}%{_sysconfdir}/pam.d/slim
 mkdir -p -m755 %{buildroot}%{_localstatedir}/run/slim
-# clean default theme directory
+# replace default theme image
 rm -f %{buildroot}%{_datadir}/slim/themes/default/background.png
 ln -s /usr/share/backgrounds/default.png %{buildroot}%{_datadir}/slim/themes/default/background.png
 
@@ -89,7 +84,7 @@ rm -rf %{buildroot}
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/pam.d/slim
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/slim.conf
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/logrotate.d/slim
-%{_sysconfdir}/sysconfig/desktop
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/sysconfig/desktop
 %{_localstatedir}/run/slim
 %{_bindir}/slim*
 %{_bindir}/update_slim_wmlist
@@ -98,9 +93,6 @@ rm -rf %{buildroot}
 %{_datadir}/slim/themes/
 
 %changelog
-* Tue Jan 08 2013 Raven <raven_kg@megaline.kg> - 1.3.2-3
-- renamed to avoid conflicts with libpixman 
-
 * Tue Jan 08 2013 Raven <raven_kg@megaline.kg> - 1.3.2-2
 - changed interface settings to system defaults
 
