@@ -1,3 +1,5 @@
+%define __cmake /usr/bin/cmake28
+
 Name:           slim
 Version:        1.3.5
 Release:        1%{?dist}
@@ -23,7 +25,7 @@ Patch2:         slim-1.3.2-selinux.patch
 
 BuildRequires:  libXmu-devel libXft-devel libXrender-devel
 BuildRequires:  libpng-devel libjpeg-devel freetype-devel fontconfig-devel
-BuildRequires:  pkgconfig gettext libselinux-devel pam-devel cmake
+BuildRequires:  pkgconfig gettext libselinux-devel pam-devel cmake28
 BuildRequires:  xwd xterm freeglut-devel
 Requires:       xwd xterm /sbin/shutdown
 Requires:       %{_sysconfdir}/pam.d
@@ -53,7 +55,7 @@ before launching slim.
 cp -p %{SOURCE4} README.Fedora
 
 %build
-CXXFLAGS="%{optflags}" cmake -DUSE_PAM=yes -DCMAKE_INSTALL_PREFIX=%{_prefix} .
+CXXFLAGS="%{optflags}" %{__cmake} -DUSE_PAM=yes -DCMAKE_INSTALL_PREFIX=%{_prefix} .
 make %{?_smp_mflags}
 
 %install
