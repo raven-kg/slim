@@ -98,7 +98,7 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Tue Jan 08 2013 Raven <raven_kg@megaline.kg> - 1.3.5-1
+* Tue Feb 12 2013 Raven <raven_kg@megaline.kg> - 1.3.5-1
 - Update to 1.3.5.
 
 * Tue Jan 08 2013 Raven <raven_kg@megaline.kg> - 1.3.2-2
