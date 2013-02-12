@@ -1,5 +1,5 @@
 
-To use SLiM put the following
+To use SLiM with Fedora, put the following
 in your /etc/sysconfig/desktop configuration:
 
 DISPLAYMANAGER=/usr/bin/slim-dynwm
